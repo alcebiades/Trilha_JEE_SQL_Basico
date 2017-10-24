@@ -1,5 +1,5 @@
 # Trilha JEE SQL
 
-### Rodando executando a aplicação:
+### Executando a aplicação:
 
 Para rodas o projeto basta executar o comando "mvn wildfly-swarm:run" diretorio da aplicação.
