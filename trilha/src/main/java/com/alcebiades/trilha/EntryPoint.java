@@ -1,11 +1,15 @@
 package com.alcebiades.trilha;
 
-//import com.alcebiades.trilha.service.LancamentoService;
-//import java.util.List;
-//import org.jboss.shrinkwrap.api.ShrinkWrap;
-//import org.jboss.shrinkwrap.api.spec.JavaArchive;
-//import org.wildfly.swarm.spi.api.ArtifactLookup;
-//import org.wildfly.swarm.spi.api.JARArchive;
+import static com.arjuna.ats.internal.jdbc.recovery.JDBCXARecovery.PASSWORD;
+import static com.sun.xml.internal.ws.model.RuntimeModeler.PORT;
+import java.io.File;
+import static javax.ws.rs.Priorities.USER;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.wildfly.swarm.Swarm;
+import org.wildfly.swarm.config.datasources.DataSource;
+import org.wildfly.swarm.config.datasources.DataSourceConsumer;
+import org.wildfly.swarm.datasources.DatasourceArchive;
+import org.wildfly.swarm.undertow.WARArchive;
 
 /**
  *
@@ -13,23 +17,35 @@ package com.alcebiades.trilha;
  */
 public class EntryPoint {
 
-//    public static void main(final String[] args) throws Exception {
-//        
-//        
-//        final Container container = new Container();
-//        container.start();
-//        final JARArchive ejbArchive = ShrinkWrap.create(JARArchive.class);
-//        ejbArchive.addClass(LancamentoService.class);
-//        /*
-//            Merge in the dependencies that the warm build plugin included in the Swarm UberJar
-//            into an EJB UberJar. This gives us a self contained EJB JAR file that Swarm can then
-//            deploy and run.
-//         */
-//        final List<JavaArchive> artifacts = ArtifactLookup.get().allArtifacts(new String[]{"org.wildfly.swarm"});
-//        for (final JavaArchive javaArchive : artifacts) {
-//            ejbArchive.merge(javaArchive);
-//        }
-//        // Deploy your app
-//        container.deploy(ejbArchive);
-//    }
+    public static void main(String args[]) throws Exception {
+
+        Swarm container = new Swarm(args);
+        container.start();
+
+        container.deploy(Swarm.artifact("org.hsqldb.jdbc.JDBCDriver", "hsqldb"));
+
+        // Cria o dataSource
+        DatasourceArchive dsArchive = ShrinkWrap.create(DatasourceArchive.class);
+
+        dsArchive.dataSource("dataSource", (DataSourceConsumer) (DataSource ds) -> {
+
+            ds.connectionUrl("jdbc:hsqldb:file:trilhajeedb");
+            ds.driverName("hsqldb");
+            ds.userName("SA");
+            ds.password("");
+        });
+
+        // Faz deploy no dataSource
+        container.deploy(dsArchive);
+
+        WARArchive deployment = ShrinkWrap.createFromZipFile(WARArchive.class, new File("target/executiveserver.war"));
+
+        ClassLoader classLoader = EntryPoint.class.getClassLoader();
+        // Configura o CDI
+        deployment.addAsWebInfResource(classLoader.getResource("beans.xml"), "beans.xml");
+        deployment.addPackages(true, Package.getPackage("com.alcebiades.trilha"));
+        deployment.addAllDependencies();
+
+        container.deploy(deployment);
+    }
 }

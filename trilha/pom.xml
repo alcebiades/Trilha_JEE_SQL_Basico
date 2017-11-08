@@ -29,13 +29,20 @@
     </dependencyManagement>
 
     <build>
-        <finalName>demo</finalName>
+        <finalName>TrilhaJEE</finalName>
         <plugins>
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>
-        
+                <configuration>
+                    <properties>
+                        <properties>
+                            <swarm.context.path>TrilhaJEE</swarm.context.path>
+                        </properties>
+                        <mainClass>com.alcebiades.trilha.EntryPoint</mainClass>
+                    </properties>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -70,11 +77,23 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs-validator</artifactId>
+            <artifactId>jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-cdi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-jaxb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>ejb-remote</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
@@ -86,24 +105,25 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>cdi-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
             <artifactId>cdi</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs</artifactId>
+            <artifactId>cdi-config</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.wildfly.swarm/container -->
-
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>container</artifactId>
-            <version>2017.10.0</version>
-            <type>jar</type>
+            <artifactId>logging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>transactions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>undertow</artifactId>
+        </dependency>
+       
         <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
         <dependency>
             <groupId>org.hsqldb</groupId>

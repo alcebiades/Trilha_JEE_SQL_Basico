@@ -1,16 +1,14 @@
 package com.alcebiades.trilha.endpoints;
 
 import com.alcebiades.trilha.model.Lancamento;
-import com.alcebiades.trilha.model.TipoLancamento;
 import com.alcebiades.trilha.model.response.LancamentoResponse;
-import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
 import com.alcebiades.trilha.service.LancamentoService;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+@Stateless
 public class LancamentoEndpointImpl implements LancamentoEndpoint {
 
     @Inject
