@@ -2,7 +2,6 @@ package com.alcebiades.trilha.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  *
@@ -11,7 +10,7 @@ import java.util.Objects;
 public class Lancamento implements Serializable {
 
     private Long id;
-    private String nome;
+    private String descricao;
     private Date data;
     private Double valor;
     private TipoLancamento tipoLancamento;
@@ -24,12 +23,12 @@ public class Lancamento implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Date getData() {
@@ -55,43 +54,4 @@ public class Lancamento implements Serializable {
     public void setTipoLancamento(TipoLancamento tipoLancamento) {
         this.tipoLancamento = tipoLancamento;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.nome);
-        hash = 29 * hash + Objects.hashCode(this.data);
-        hash = 29 * hash + Objects.hashCode(this.valor);
-        hash = 29 * hash + Objects.hashCode(this.tipoLancamento);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Lancamento other = (Lancamento) obj;
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.data, other.data)) {
-            return false;
-        }
-        if (!Objects.equals(this.valor, other.valor)) {
-            return false;
-        }
-        return Objects.equals(this.tipoLancamento, other.tipoLancamento);
-    }
-
 }
