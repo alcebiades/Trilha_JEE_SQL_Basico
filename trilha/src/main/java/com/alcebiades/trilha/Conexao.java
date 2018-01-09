@@ -14,7 +14,7 @@ import javax.sql.DataSource;
  */
 public class Conexao {
 
-    @Resource(mappedName = "jboss/datasources/TrilhaDS")
+    @Resource(lookup = "jboss/datasources/trilhads")
     private DataSource ds;
 
     @Resource

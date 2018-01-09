@@ -1,6 +1,7 @@
 package com.alcebiades.trilha.model.response;
 
 import com.alcebiades.trilha.model.Lancamento;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,10 +22,16 @@ public class LancamentoResponse {
     }
 
     public List<Lancamento> getListLancamento() {
+        if (listLancamento == null) {
+            listLancamento = new ArrayList<>();
+        }
         return listLancamento;
     }
 
     public void setListLancamento(List<Lancamento> listLancamento) {
+        if (listLancamento == null) {
+            listLancamento = new ArrayList<>();
+        }
         this.listLancamento = listLancamento;
     }
 }

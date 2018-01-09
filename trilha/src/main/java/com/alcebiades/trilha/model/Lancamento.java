@@ -1,6 +1,7 @@
 package com.alcebiades.trilha.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -39,6 +40,14 @@ public class Lancamento implements Serializable {
         this.data = data;
     }
 
+    public Timestamp getDataDb() {
+        return new Timestamp(data.getTime());
+    }
+
+    public void setDataDb(Timestamp data) {
+        this.data = new Date(data.getTime());
+    }
+
     public Double getValor() {
         return valor;
     }
@@ -53,5 +62,9 @@ public class Lancamento implements Serializable {
 
     public void setTipoLancamento(TipoLancamento tipoLancamento) {
         this.tipoLancamento = tipoLancamento;
+    }
+
+    public static String getDbName() {
+        return Lancamento.class.getCanonicalName();
     }
 }
